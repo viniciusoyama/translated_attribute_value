@@ -3,7 +3,7 @@ In your model (activerecord or mongo):
 
 ```ruby
 class User
-  include NamespacedAssetsRails::Base
+  include TranslatedAttributeValue::Base
 
   # if you have a field called status
   translate_value_for :status
