@@ -5,6 +5,9 @@ describe TranslatedAttributeValue::Base do
   let(:test_model) { Class.new do
       include TranslatedAttributeValue::Base
       translated_value_for :status
+      def self.to_s
+        "nome_classe"
+      end
     end.new
   }
 
@@ -21,7 +24,7 @@ describe TranslatedAttributeValue::Base do
 
       specify do
         test_model.stub(:status).and_return('my_value')
-        expect(I18n).to receive(:t).with("activerecord.attributes.user.status_translation.my_value")
+        expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value")
         test_model.status_translated
       end
 
@@ -34,7 +37,7 @@ describe TranslatedAttributeValue::Base do
 
       specify do
         test_model.stub(:status).and_return('my_value')
-        expect(I18n).to receive(:t).with("mongoid.attributes.user.status_translation.my_value")
+        expect(I18n).to receive(:t).with("mongoid.attributes.nome_classe.status_translation.my_value")
         test_model.status_translated
       end
 
@@ -46,7 +49,7 @@ describe TranslatedAttributeValue::Base do
 
       specify do
         test_model.stub(:status).and_return('my_value')
-        expect(I18n).to receive(:t).with("translated_attribute_value.user.status_translation.my_value")
+        expect(I18n).to receive(:t).with("translated_attribute_value.nome_classe.status_translation.my_value")
         test_model.status_translated
       end
 
