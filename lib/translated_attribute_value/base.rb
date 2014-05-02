@@ -10,17 +10,17 @@ module TranslatedAttributeValue
           if defined?(ActiveRecord::Base)
             self.send(:define_method, "#{attribute_name}_translated") do
               attribute_value = self.send(attribute_name)
-              I18n.t("activerecord.attributes.user.status_translation.#{attribute_name}.#{attribute_value}")
+              I18n.t("activerecord.attributes.user.#{attribute_name}_translation.#{attribute_value}")
             end
           elsif defined?(Mongoid::Document)
             self.send(:define_method, "#{attribute_name}_translated") do
               attribute_value = self.send(attribute_name)
-              I18n.t("mongoid.attributes.user.status_translation.#{attribute_name}.#{attribute_value}")
+              I18n.t("mongoid.attributes.user.#{attribute_name}_translation.#{attribute_value}")
             end
           else
             self.send(:define_method, "#{attribute_name}_translated") do
               attribute_value = self.send(attribute_name)
-              I18n.t("translated_attribute_value.user.status_translation.#{attribute_name}.#{attribute_value}")
+              I18n.t("translated_attribute_value.user.#{attribute_name}_translation.#{attribute_value}")
             end
           end
         end
