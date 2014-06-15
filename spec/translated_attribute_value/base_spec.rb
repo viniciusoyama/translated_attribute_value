@@ -6,7 +6,7 @@ describe TranslatedAttributeValue::Base do
       include TranslatedAttributeValue::Base
       translated_value_for :status
       def self.to_s
-        "nome_classe"
+        "NomeClasse"
       end
     end.new
   }
