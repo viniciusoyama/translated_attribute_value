@@ -9,7 +9,8 @@ describe TranslatedAttributeValue::Base do
 
   describe "translated_value_for" do
     describe 'ActiveRecord', f:true do
-      let(:test_model) { Class.new ActiveRecord::Base do
+      let(:test_model) {
+        Class.new ActiveRecord::Base do
           translated_value_for :status
           def self.to_s
             "nome_classe"
@@ -26,7 +27,8 @@ describe TranslatedAttributeValue::Base do
     end
 
     describe 'Mongoid' do
-      let(:test_model) { Class.new do
+      let(:test_model) {
+        Class.new do
           include Mongoid::Document
           translated_value_for :status
           def self.to_s
@@ -44,10 +46,8 @@ describe TranslatedAttributeValue::Base do
     end
 
     describe 'without ActiveRecord or Mongoid' do
-      let(:test_model) { Class.new do
-          def connection
-
-          end
+      let(:test_model) {
+        Class.new do
           extend TranslatedAttributeValue::Base
           translated_value_for :status
           def self.to_s
