@@ -27,6 +27,8 @@ GEM
       activemodel (= 4.1.0)
       activesupport (= 4.1.0)
       arel (~> 5.0.0)
+    activerecord-nulldb-adapter (0.3.1)
+      activerecord (>= 2.0.0)
     activesupport (4.1.0)
       i18n (~> 0.6, >= 0.6.9)
       json (~> 1.7, >= 1.7.7)
@@ -34,8 +36,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
+    bson (2.3.0)
     builder (3.2.2)
     columnize (0.8.9)
+    connection_pool (2.0.0)
     debugger (1.6.6)
       columnize (>= 0.3.1)
       debugger-linecache (~> 1.2.0)
@@ -52,7 +56,18 @@ GEM
       treetop (~> 1.4.8)
     mime-types (1.25.1)
     minitest (5.3.3)
+    mongoid (4.0.0.beta2)
+      activemodel (>= 4.0.0)
+      moped (~> 2.0.beta6)
+      origin (~> 2.1)
+      tzinfo (>= 0.3.37)
+    moped (2.0.0.rc2)
+      bson (~> 2.2)
+      connection_pool (~> 2.0)
+      optionable (~> 0.2.0)
     multi_json (1.9.2)
+    optionable (0.2.0)
+    origin (2.1.1)
     polyglot (0.3.4)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -107,6 +122,9 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-nulldb-adapter
   debugger
+  mongoid (= 4.0.0.beta2)
+  rails (= 4.1.0)
   rspec (= 3.0.0.beta2)
   translated_attribute_value!

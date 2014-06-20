@@ -2,25 +2,20 @@
 require 'spec_helper'
 
 describe TranslatedAttributeValue::Base do
-  let(:test_model) { Class.new do
-      include TranslatedAttributeValue::Base
-      translated_value_for :status
-      def self.to_s
-        "nome_classe"
-      end
-    end.new
-  }
 
   before(:each) do
-    stub_const("I18n", double)
+    stub_const("I18n", Object.new)
   end
 
   describe "translated_value_for" do
-    describe 'ActiveRecord' do
-      before(:each) do
-        stub_const("I18n", Object.new)
-        stub_const("ActiveRecord::Base", Object.new)
-      end
+    describe 'ActiveRecord', f:true do
+      let(:test_model) { Class.new ActiveRecord::Base do
+          translated_value_for :status
+          def self.to_s
+            "nome_classe"
+          end
+        end.new
+      }
 
       specify do
         test_model.stub(:status).and_return('my_value')
@@ -29,11 +24,16 @@ describe TranslatedAttributeValue::Base do
       end
 
     end
+
     describe 'Mongoid' do
-      before(:each) do
-        stub_const("I18n", Object.new)
-        stub_const("Mongoid::Document", Object.new)
-      end
+      let(:test_model) { Class.new do
+          include Mongoid::Document
+          translated_value_for :status
+          def self.to_s
+            "nome_classe"
+          end
+        end.new
+      }
 
       specify do
         test_model.stub(:status).and_return('my_value')
@@ -42,10 +42,19 @@ describe TranslatedAttributeValue::Base do
       end
 
     end
-    describe 'Mongoid' do
-      before(:each) do
-        stub_const("I18n", Object.new)
-      end
+
+    describe 'without ActiveRecord or Mongoid' do
+      let(:test_model) { Class.new do
+          def connection
+
+          end
+          extend TranslatedAttributeValue::Base
+          translated_value_for :status
+          def self.to_s
+            "nome_classe"
+          end
+        end.new
+      }
 
       specify do
         test_model.stub(:status).and_return('my_value')
