@@ -6,7 +6,7 @@ end
 
 
 ActiveSupport.on_load(:active_record) do
-  ActiveRecord::Base.send(:extend, TranslatedAttributeValue::Base)
+  ActiveRecord::Base.send(:include, TranslatedAttributeValue::Base)
 end
 
 ActiveSupport.on_load(:mongoid) do

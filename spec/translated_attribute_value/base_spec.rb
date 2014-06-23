@@ -8,9 +8,9 @@ describe TranslatedAttributeValue::Base do
 
   describe "translated_value_for" do
     describe 'ActiveRecord', f:true do
-      let(:test_model) {
+      let(:test_model_instance) {
         Class.new ActiveRecord::Base do
-          # define_translated_value_for :status
+
           def status
             'my_value'
           end
@@ -18,19 +18,20 @@ describe TranslatedAttributeValue::Base do
           def self.to_s
             "nome_classe"
           end
+
         end.new
       }
 
       specify do
-        expect(test_model).to receive(:method_missing).once.and_call_original
+        expect(test_model_instance).to receive(:method_missing).once.and_call_original
         expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value").twice
-        2.times{ test_model.status_translated }
+        2.times{ test_model_instance.status_translated }
       end
 
     end
 
-    describe 'Mongoid', g:true do
-      let(:test_model) {
+    describe 'Mongoid' do
+      let(:test_model_instance) {
         Class.new do
           include Mongoid::Document
 
@@ -41,21 +42,22 @@ describe TranslatedAttributeValue::Base do
           def self.to_s
             "nome_classe"
           end
+
         end.new
       }
 
       specify do
-        expect(test_model).to receive(:method_missing).once.and_call_original
+        expect(test_model_instance).to receive(:method_missing).once.and_call_original
         expect(I18n).to receive(:t).with("mongoid.attributes.nome_classe.status_translation.my_value").twice
-        2.times{ test_model.status_translated }
+        2.times{ test_model_instance.status_translated }
       end
 
     end
 
     describe 'without ActiveRecord or Mongoid' do
-      let(:test_model) {
+      let(:test_model_instance) {
         Class.new do
-          extend TranslatedAttributeValue::Base
+          include TranslatedAttributeValue::Base
 
           def status
             'my_value'
@@ -64,13 +66,14 @@ describe TranslatedAttributeValue::Base do
           def self.to_s
             "nome_classe"
           end
+
         end.new
       }
 
       specify do
-        expect(test_model).to receive(:method_missing).once.and_call_original
+        expect(test_model_instance).to receive(:method_missing).once.and_call_original
         expect(I18n).to receive(:t).with("translated_attribute_value.nome_classe.status_translation.my_value").twice
-        2.times{ test_model.status_translated }
+        2.times{ test_model_instance.status_translated }
       end
 
     end

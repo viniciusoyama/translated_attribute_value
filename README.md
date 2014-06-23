@@ -1,15 +1,10 @@
 # How to use
-In your model (activerecord or mongo):
+If you are using ActiveRecord or Mongoid, translated attribute value will be included by default, else you have to include TranslatedAttributeValue::Base in your model class:
 
 ```ruby
 class User
   include TranslatedAttributeValue::Base
-
-  # if you have a field called status
-  translate_value_for :status
-
-  # more field
-  translate_value_for :payments_status, :rule_status
+  # model related code
 end
 ```
 
@@ -52,4 +47,5 @@ Anywhere in your code you can call
   user = User.new
   user.status = 'value1'
   user.status_translated
+  #=> 'Translation for value1'
 ```
