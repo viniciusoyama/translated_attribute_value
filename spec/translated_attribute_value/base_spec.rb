@@ -2,7 +2,6 @@
 require 'spec_helper'
 
 describe TranslatedAttributeValue::Base do
-
   before(:each) do
     stub_const("I18n", Object.new)
   end
@@ -11,7 +10,11 @@ describe TranslatedAttributeValue::Base do
     describe 'ActiveRecord', f:true do
       let(:test_model) {
         Class.new ActiveRecord::Base do
-          translated_value_for :status
+          # define_translated_value_for :status
+          def status
+            'my_value'
+          end
+
           def self.to_s
             "nome_classe"
           end
@@ -19,18 +22,22 @@ describe TranslatedAttributeValue::Base do
       }
 
       specify do
-        test_model.stub(:status).and_return('my_value')
-        expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value")
-        test_model.status_translated
+        expect(test_model).to receive(:method_missing).once.and_call_original
+        expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value").twice
+        2.times{ test_model.status_translated }
       end
 
     end
 
-    describe 'Mongoid' do
+    describe 'Mongoid', g:true do
       let(:test_model) {
         Class.new do
           include Mongoid::Document
-          translated_value_for :status
+
+          def status
+            'my_value'
+          end
+
           def self.to_s
             "nome_classe"
           end
@@ -38,9 +45,9 @@ describe TranslatedAttributeValue::Base do
       }
 
       specify do
-        test_model.stub(:status).and_return('my_value')
-        expect(I18n).to receive(:t).with("mongoid.attributes.nome_classe.status_translation.my_value")
-        test_model.status_translated
+        expect(test_model).to receive(:method_missing).once.and_call_original
+        expect(I18n).to receive(:t).with("mongoid.attributes.nome_classe.status_translation.my_value").twice
+        2.times{ test_model.status_translated }
       end
 
     end
@@ -49,7 +56,11 @@ describe TranslatedAttributeValue::Base do
       let(:test_model) {
         Class.new do
           extend TranslatedAttributeValue::Base
-          translated_value_for :status
+
+          def status
+            'my_value'
+          end
+
           def self.to_s
             "nome_classe"
           end
@@ -57,9 +68,9 @@ describe TranslatedAttributeValue::Base do
       }
 
       specify do
-        test_model.stub(:status).and_return('my_value')
-        expect(I18n).to receive(:t).with("translated_attribute_value.nome_classe.status_translation.my_value")
-        test_model.status_translated
+        expect(test_model).to receive(:method_missing).once.and_call_original
+        expect(I18n).to receive(:t).with("translated_attribute_value.nome_classe.status_translation.my_value").twice
+        2.times{ test_model.status_translated }
       end
 
     end

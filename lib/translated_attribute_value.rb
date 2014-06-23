@@ -10,5 +10,5 @@ ActiveSupport.on_load(:active_record) do
 end
 
 ActiveSupport.on_load(:mongoid) do
-  Mongoid::Document::ClassMethods.send(:include, TranslatedAttributeValue::Base)
+  Mongoid::Document.send(:include, TranslatedAttributeValue::Base)
 end

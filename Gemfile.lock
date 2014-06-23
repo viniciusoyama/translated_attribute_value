@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    translated_attribute_value (0.0.2a)
+    translated_attribute_value (0.0.2b)
       rails (~> 4.1.0)
 
 GEM
