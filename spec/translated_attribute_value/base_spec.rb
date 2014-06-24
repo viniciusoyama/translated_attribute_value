@@ -9,7 +9,7 @@ describe TranslatedAttributeValue::Base do
   end
 
   describe "translated_value_for" do
-    describe 'ActiveRecord', f:true do
+    describe 'ActiveRecord' do
       let(:test_model_instance) {
         Class.new ActiveRecord::Base do
 
@@ -24,9 +24,12 @@ describe TranslatedAttributeValue::Base do
         end.new
       }
 
-      specify "I can call translated_value_for in the model"
+      specify "I can call translated_value_for in the model" do
+        expect(test_model_instance.class).to respond_to(:define_translated_value_for)
+      end
+
       describe "I can call a attribute with attribute_translated without defining it" do
-        specify "the translation must be called" do
+        specify "the translation must be called", f:true do
           expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value")
           test_model_instance.status_translated
         end
