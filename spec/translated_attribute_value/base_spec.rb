@@ -3,7 +3,9 @@ require 'spec_helper'
 
 describe TranslatedAttributeValue::Base do
   before(:each) do
-    stub_const("I18n", Object.new)
+    stub_i18n = Object.new
+    stub_i18n.stub("t")
+    stub_const("I18n", stub_i18n)
   end
 
   describe "translated_value_for" do
@@ -22,10 +24,17 @@ describe TranslatedAttributeValue::Base do
         end.new
       }
 
-      specify do
-        expect(test_model_instance).to receive(:method_missing).once.and_call_original
-        expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value").twice
-        2.times{ test_model_instance.status_translated }
+      specify "I can call translated_value_for in the model"
+      describe "I can call a attribute with attribute_translated without defining it" do
+        specify "the translation must be called" do
+          expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value")
+          test_model_instance.status_translated
+        end
+
+        specify "the method should be defined" do
+          test_model_instance.status_translated
+          expect(test_model_instance).to respond_to(:status_translated)
+        end
       end
 
     end
@@ -46,11 +55,18 @@ describe TranslatedAttributeValue::Base do
         end.new
       }
 
-      specify do
-        expect(test_model_instance).to receive(:method_missing).once.and_call_original
-        expect(I18n).to receive(:t).with("mongoid.attributes.nome_classe.status_translation.my_value").twice
-        2.times{ test_model_instance.status_translated }
+      describe "I can call a attribute with attribute_translated without defining it" do
+        specify "the translation must be called" do
+          expect(I18n).to receive(:t).with("mongoid.attributes.nome_classe.status_translation.my_value")
+          test_model_instance.status_translated
+        end
+
+        specify "the method should be defined" do
+          test_model_instance.status_translated
+          expect(test_model_instance).to respond_to(:status_translated)
+        end
       end
+
 
     end
 
@@ -70,11 +86,18 @@ describe TranslatedAttributeValue::Base do
         end.new
       }
 
-      specify do
-        expect(test_model_instance).to receive(:method_missing).once.and_call_original
-        expect(I18n).to receive(:t).with("translated_attribute_value.nome_classe.status_translation.my_value").twice
-        2.times{ test_model_instance.status_translated }
+      describe "I can call a attribute with attribute_translated without defining it" do
+        specify "the translation must be called" do
+          expect(I18n).to receive(:t).with("translated_attribute_value.nome_classe.status_translation.my_value")
+          test_model_instance.status_translated
+        end
+
+        specify "the method should be defined" do
+          test_model_instance.status_translated
+          expect(test_model_instance).to respond_to(:status_translated)
+        end
       end
+
 
     end
 
