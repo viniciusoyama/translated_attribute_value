@@ -25,11 +25,11 @@ describe TranslatedAttributeValue::Base do
       }
 
       specify "I can call translated_value_for in the model" do
-        expect(test_model_instance.class).to respond_to(:define_translated_value_for)
+        expect(test_model_instance.class).to respond_to(:translated_value_for)
       end
 
       describe "I can call a attribute with attribute_translated without defining it" do
-        specify "the translation must be called", f:true do
+        specify "the translation must be called" do
           expect(I18n).to receive(:t).with("activerecord.attributes.nome_classe.status_translation.my_value")
           test_model_instance.status_translated
         end
@@ -57,6 +57,11 @@ describe TranslatedAttributeValue::Base do
 
         end.new
       }
+
+      specify "I can call translated_value_for in the model" do
+        expect(test_model_instance.class).to respond_to(:translated_value_for)
+      end
+
 
       describe "I can call a attribute with attribute_translated without defining it" do
         specify "the translation must be called" do
@@ -88,6 +93,11 @@ describe TranslatedAttributeValue::Base do
 
         end.new
       }
+
+      specify "I can call translated_value_for in the model" do
+        expect(test_model_instance.class).to respond_to(:translated_value_for)
+      end
+
 
       describe "I can call a attribute with attribute_translated without defining it" do
         specify "the translation must be called" do
