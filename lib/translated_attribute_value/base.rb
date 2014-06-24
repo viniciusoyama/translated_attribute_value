@@ -12,7 +12,7 @@ module TranslatedAttributeValue
 
     module InstanceMethods
       def method_missing_with_translation(name, *args, &block)
-        attribute_name = name.to_s.gsub!(/_translated/, '') # this will return nil or the modified string
+        attribute_name = name.to_s.gsub!(/_translated$/, '') # this will return nil or the modified string
         if (attribute_name) && self.respond_to?(attribute_name)
           self.define_translated_value_for(attribute_name)
           self.send(name)
