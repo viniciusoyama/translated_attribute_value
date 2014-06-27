@@ -18,7 +18,7 @@ describe TranslatedAttributeValue::Base do
           end
 
           def self.to_s
-            "nome_classe"
+            "NomeClasse"
           end
 
         end.new
@@ -52,7 +52,7 @@ describe TranslatedAttributeValue::Base do
           end
 
           def self.to_s
-            "nome_classe"
+            "NomeClasse"
           end
 
         end.new
@@ -88,7 +88,7 @@ describe TranslatedAttributeValue::Base do
           end
 
           def self.to_s
-            "nome_classe"
+            "NomeClasse"
           end
 
         end.new
