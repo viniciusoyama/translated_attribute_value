@@ -13,9 +13,25 @@ shared_examples_for 'class_with_translated_attribute' do |i18n_key_name|
       test_model_instance.status_translated
     end
 
-    specify "the method should be defined" do
+    specify "the method should be defined after the first call" do
       test_model_instance.status_translated
       expect(test_model_instance).to respond_to(:status_translated)
+    end
+  end
+
+  describe 'it returns a empty string if the attribute is blank' do
+    specify 'when attribute is a empty string' do
+      def test_model_instance.status
+        ""
+      end
+      expect(test_model_instance.status_translated).to eq("")
+    end
+
+    specify 'when attribute is nil' do
+      def test_model_instance.status
+        nil
+      end
+      expect(test_model_instance.status_translated).to eq("")
     end
   end
 
@@ -23,7 +39,7 @@ end
 describe TranslatedAttributeValue::Base do
   before(:each) do
     stub_i18n = Object.new
-    stub_i18n.stub("t")
+    allow(stub_i18n).to receive("t")
     stub_const("I18n", stub_i18n)
   end
 
