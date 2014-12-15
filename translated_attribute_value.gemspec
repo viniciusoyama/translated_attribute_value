@@ -18,5 +18,5 @@ Gem::Specification.new do |spec|
   spec.test_files = Dir["spec/**/*"]
   spec.files = Dir["{app,config,db,lib,vendor}/**/*", "MIT-LICENSE", "Rakefile", "README.md"]
 
-  spec.add_dependency "rails", "~> 4.1.0"
+  spec.add_dependency "rails", "~> 4.1"
 end
